@@ -52,5 +52,10 @@ router.post("/", ensureCorrectUser, async (req, res, next) => {
  **/
 
 router.post("/:id/read", ensureCorrectUser, async (req, res, next) => {
-  
-}
+  try {
+    const message = await Message.markRead(req.params.id);
+    return res.json({ message });
+  } catch (err) {
+    return next(err);
+  }
+});
